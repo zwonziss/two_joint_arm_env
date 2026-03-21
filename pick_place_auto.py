@@ -6,7 +6,6 @@ from arm_env import ArmEnv
 
 R = np.deg2rad
 
-ü
 PICK_SH  = -20.0;  PICK_EL  = 70.0   
 CARRY_SH = -60.0;  CARRY_EL = 20.0   
 DROP_SH  = -30.0;  DROP_EL  = 55.0   
