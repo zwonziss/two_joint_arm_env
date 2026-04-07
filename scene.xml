@@ -1,7 +1,7 @@
 <mujoco model="so_arm100 scene">
   <include file="so_arm100.xml"/>
 
-  <statistic center="0.1 -0.01 0.05" extent="0.5"/>
+  <statistic center="0.1 0.05 0.1" extent="0.65"/>
 
   <visual>
     <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
@@ -14,14 +14,103 @@
     <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
       markrgb="0.8 0.8 0.8" width="300" height="300"/>
     <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+    <material name="container_mat"    rgba="0.35 0.50 0.80 0.70"/>
+    <material name="container_bottom" rgba="0.25 0.40 0.70 1.00"/>
   </asset>
 
   <worldbody>
     <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
-    <body name="box-o" pos="0 -0.4 0">
-    <freejoint/>
-    <geom type="box" size="0.02 0.02 0.02" rgba="1 0 0 1" friction="2 0.005 0.0001"/>
+
+    <!-- ═══════════════════════════════════════════════════
+         10 Balls  (radius 0.018 m, scattered in front)
+         ═══════════════════════════════════════════════════ -->
+
+    <!-- Ball 1 : Red -->
+    <body name="ball_1" pos="0.30 -0.12 0.0">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="0.95 0.15 0.15 1" friction="9 0.005 0.0001" mass="0.04"/>
     </body>
+
+    <!-- Ball 2 : Green -->
+    <body name="ball_2" pos="0.22  0.4 0.018">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="0.10 0.85 0.20 1" friction="9 0.005 0.0001" mass="0.04"/>
+    </body>
+
+    <!-- Ball 3 : Blue -->
+    <body name="ball_3" pos="0.16  0.24 0.018">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="0.15 0.30 1.00 1" friction="9 0.005 0.0001" mass="0.04"/>
+    </body>
+
+    <!-- Ball 4 : Yellow -->
+    <body name="ball_4" pos="0.22 -0.35 0.018">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="1.00 0.95 0.00 1" friction="9 0.005 0.0001" mass="0.04"/>
+    </body>
+
+    <!-- Ball 5 : Cyan -->
+    <body name="ball_5" pos="0.24  0.36 0.018">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="0.00 0.90 0.90 1" friction="9 0.005 0.0001" mass="0.04"/>
+    </body>
+
+    <!-- Ball 6 : Magenta -->
+    <body name="ball_6" pos="0.13  0.28 0.018">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="0.95 0.10 0.90 1" friction="9 0.005 0.0001" mass="0.04"/>
+    </body>
+
+    <!-- Ball 7 : Orange -->
+    <body name="ball_7" pos="0.21 -0.04 0.018">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="1.00 0.50 0.00 1" friction="9 0.005 0.0001" mass="0.04"/>
+    </body>
+
+    <!-- Ball 8 : Purple -->
+    <body name="ball_8" pos="0.17  0.08 0.018">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="0.55 0.10 0.85 1" friction="6 0.005 0.0001" mass="0.04"/>
+    </body>
+
+    <!-- Ball 9 : Lime -->
+    <body name="ball_9" pos="-0.42 -0.35 0.018">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="0.55 1.00 0.00 1" friction="6 0.005 0.0001" mass="0.04"/>
+    </body>
+
+    <!-- Ball 10 : Pink -->
+    <body name="ball_10" pos="0.26  0.36 0.018">
+      <freejoint/>
+      <geom type="sphere" size="0.01" rgba="1.00 0.45 0.70 1" friction="6 0.005 0.0001" mass="0.04"/>
+    </body>
+
+    <!-- ═══════════════════════════════════════════════════
+         Container  (fixed to world, placed in +Y quadrant)
+         Inner cavity ≈ 9 cm × 9 cm × 5.5 cm
+         ═══════════════════════════════════════════════════ -->
+    <body name="container" pos="0.04 0.27 0">
+      <!-- bottom -->
+      <geom name="c_bot" type="box" size="0.050 0.050 0.006"
+            pos="0 0 0.006" material="container_bottom"/>
+      <!-- +X wall -->
+      <geom name="c_px"  type="box" size="0.006 0.050 0.030"
+            pos=" 0.050 0 0.036" material="container_mat"/>
+      <!-- -X wall -->
+      <geom name="c_nx"  type="box" size="0.006 0.050 0.030"
+            pos="-0.050 0 0.036" material="container_mat"/>
+      <!-- +Y wall -->
+      <geom name="c_py"  type="box" size="0.050 0.006 0.030"
+            pos="0  0.050 0.036" material="container_mat"/>
+      <!-- -Y wall -->
+      <geom name="c_ny"  type="box" size="0.050 0.006 0.030"
+            pos="0 -0.050 0.036" material="container_mat"/>
+      <!-- small gold beacon so the container is easy to spot -->
+      <geom name="c_beacon" type="sphere" size="0.007"
+            pos="0 0 0.090" rgba="1.0 0.85 0.0 1.0"
+            contype="0" conaffinity="0"/>
+    </body>
+
   </worldbody>
 </mujoco>

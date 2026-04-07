@@ -105,6 +105,8 @@
                 <geom type="mesh" mesh="Fixed_Jaw_Motor" class="motor_visual"/>
                 <geom type="mesh" mesh="Fixed_Jaw_Collision_1" class="collision"/>
                 <geom type="mesh" mesh="Fixed_Jaw_Collision_2" class="collision"/>
+                <!-- EE site: midpoint between jaw pads when closed, used for IK -->
+                <site name="ee_site" pos="0.0 -0.090 0" size="0.005" rgba="1 1 0 0.8"/>
                 <geom class="finger_collision" name="fixed_jaw_pad_1" size="0.001 0.005 0.004" pos="0.0089 -0.1014 0"/>
                 <geom class="finger_collision" name="fixed_jaw_pad_2" size="0.001 0.005 0.006" pos="0.0109 -0.0914 0"/>
                 <geom class="finger_collision" name="fixed_jaw_pad_3" size="0.001 0.01 0.007" pos="0.0126 -0.0768 0"/>
