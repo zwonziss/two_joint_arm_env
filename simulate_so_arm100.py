@@ -124,7 +124,7 @@ def plan_pick_and_place(place_xy, z_standoff=0.25, lift_height=0.3, wrist_roll=1
     offset = -0.012 if box_pos[0] < 0 else -0.015
     offset_2 = 0.02 if box_pos[0] < 0 else -0.015
     
-    grasp_center = np.array([box_pos[0] + (offset * 0.5), box_pos[1] + offset_2, cube_h + 0.01])
+    grasp_center = np.array([box_pos[0] + (offset * 0.5), box_pos[1] + offset_2, cube_h + 0.002])
     place_center = np.array([place_xy[0], place_xy[1], cube_h])
     DOWN = np.array([0, 0, -1])
 
