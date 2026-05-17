@@ -57,8 +57,14 @@
       </default>
       <default class="collision">
         <geom group="3" type="mesh" material="white"/>
+        <!-- FIX: solimp must have d_min < d_max. Was "2 1 0.01" (malformed).
+             Now: d_min=0.95, d_max=0.99, width=0.001 → stiff, stable contact.
+             Friction bumped slightly for an even firmer grip. -->
         <default class="finger_collision">
-          <geom type="box" solimp="2 1 0.01" solref="0.01 1" friction="1 0.005 0.0001"/>
+          <geom type="box"
+                solimp="0.95 0.99 0.001"
+                solref="0.005 1"
+                friction="3 0.05 0.001"/>
         </default>
       </default>
     </default>
@@ -105,7 +111,6 @@
                 <geom type="mesh" mesh="Fixed_Jaw_Motor" class="motor_visual"/>
                 <geom type="mesh" mesh="Fixed_Jaw_Collision_1" class="collision"/>
                 <geom type="mesh" mesh="Fixed_Jaw_Collision_2" class="collision"/>
-                <!-- EE site: midpoint between jaw pads when closed, used for IK -->
                 <site name="ee_site" pos="0.0 -0.090 0" size="0.005" rgba="1 1 0 0.8"/>
                 <geom class="finger_collision" name="fixed_jaw_pad_1" size="0.001 0.005 0.004" pos="0.0089 -0.1014 0"/>
                 <geom class="finger_collision" name="fixed_jaw_pad_2" size="0.001 0.005 0.006" pos="0.0109 -0.0914 0"/>
